@@ -34717,6 +34717,7 @@ GameObject:
   - component: {fileID: 2119357514}
   - component: {fileID: 2119357516}
   - component: {fileID: 2119357515}
+  - component: {fileID: 2119357517}
   m_Layer: 5
   m_Name: VictoryPanel
   m_TagString: Untagged
@@ -34786,6 +34787,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2119357513}
   m_CullTransparentMesh: 1
+--- !u!114 &2119357517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119357513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cebe30c1e811434bb4c7ad40ef37917, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waveText: {fileID: 356932448}
 --- !u!1 &2139238875
 GameObject:
   m_ObjectHideFlags: 0
