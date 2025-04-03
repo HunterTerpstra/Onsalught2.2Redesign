@@ -4,26 +4,28 @@ using TMPro;
 
 public class GameControl : MonoBehaviour
 {
-    public Button playPauseButton;   // Assign in Inspector
-    public Image buttonImage;        // The image on the button
-    public Sprite playSprite;        // Sprite for "play"
-    public Sprite pauseSprite;       // Sprite for "pause"
-    public TMP_Text buttonText;      // Optional text label on the button
-    public CanvasGroup uiCanvasGroup;  // The CanvasGroup component on your UI Canvas
-
+    public Button playPauseButton;
+    public Image buttonImage;
+    public Sprite playSprite;
+    public Sprite pauseSprite;
+    public TMP_Text buttonText;
+    public CanvasGroup uiCanvasGroup;
     public GameObject GreyScreenPaused;
+    
+    // Add a reference to the arrow container holding your pulsing arrows.
+    public GameObject arrowContainer;
+    public GameObject StartGameOverlay;
 
     private bool gameStarted = false;
     public bool isPaused = false;
-
     public static GameControl instance;
 
     void Awake(){
         if(instance != null && instance != this){
-        Destroy(gameObject);
-    } else {
-        instance = this;
-    }
+            Destroy(gameObject);
+        } else {
+            instance = this;
+        }
     }
 
     public void OnPlayPauseButtonClicked()
@@ -31,11 +33,22 @@ public class GameControl : MonoBehaviour
         if (!gameStarted)
         {
             gameStarted = true;
+            // Unpause the game.
             Time.timeScale = 1f;
+            
+            // Hide the arrow container so the pulsing arrows disappear.
+            if (arrowContainer != null)
+            {
+                arrowContainer.SetActive(false);
+            }
+            if (StartGameOverlay != null)
+            {
+                StartGameOverlay.SetActive(false);
+            }
+
             if (EnemyManager.main != null)
                 EnemyManager.main.StartGame();
 
-            // Switch to pause state.
             if (buttonImage != null)
                 buttonImage.sprite = pauseSprite;
             if (buttonText != null)
@@ -50,7 +63,6 @@ public class GameControl : MonoBehaviour
         {
             if (!isPaused)
             {
-                // Pause the game.
                 GreyScreenPaused.SetActive(true);
                 Time.timeScale = 0f;
                 isPaused = true;
@@ -66,7 +78,6 @@ public class GameControl : MonoBehaviour
             }
             else
             {
-                // Unpause the game.
                 GreyScreenPaused.SetActive(false);
                 Time.timeScale = 1f;
                 isPaused = false;

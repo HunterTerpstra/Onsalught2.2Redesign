@@ -49,25 +49,31 @@ public class MenuControl : MonoBehaviour
     public string _newGameLevel;
 
     public void Start(){
-        resolutions = Screen.resolutions;
+        // Clear the existing options.
         resolutionDropdown.ClearOptions();
+        
+        // Create a new list with one option.
         List<string> options = new List<string>();
-        int currentResolutionIndex = 0;
-        for(int i = 0; i < resolutions.Length; i++){
-            string option = resolutions[i].width + " x " + resolutions[i].height;
-            options.Add(option);
-            if(resolutions[i].width == Screen.width && resolutions[i].height == Screen.height){
-                currentResolutionIndex = i;
-            }
-            resolutionIndex = currentResolutionIndex;
-        }    
+        options.Add("1920 x 1080");
+        
+        // Add the option to the dropdown.
         resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.value = 0;
         resolutionDropdown.RefreshShownValue();
+        
+        // Optionally, set resolutionIndex to 0
+        resolutionIndex = 0;
+        SetResolution(resolutionIndex);
         
         // Initialize brightness settings
         brightnessSlider.value = defaultBrightness;
         brightnessTextValue.text = defaultBrightness.ToString("0.0");
+        PlayerPrefs.SetFloat("masterBrightness", defaultBrightness);
+
+        float newVolume2 = defaultVolume / 1000f;
+        volumeTextValue.text = newVolume2.ToString("0.0");
+        volumeSlider.value = newVolume2;
+        PlayerPrefs.SetFloat("masterVolume", newVolume2);
         
         // Apply the brightness to the post-processing
         if(brightnessController != null)
@@ -78,13 +84,10 @@ public class MenuControl : MonoBehaviour
     }
 
 
-    public void SetResolution(int resolutionIndex3){
-    
-        //Resolution resolution = resolutions[resolutionIndex];
-        resolutionIndex = resolutionIndex3;
-        //Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-    
-    }
+    public void SetResolution(int dummyIndex){
+    // Set the resolution to 1920 x 1080 regardless of input.
+        Screen.SetResolution(1920, 1080, Screen.fullScreen);
+}
 
 
     public void NewGameDialogYes()
@@ -206,11 +209,11 @@ public class MenuControl : MonoBehaviour
         QualitySettings.SetQualityLevel(_qualityLevel);
 
 
-        PlayerPrefs.SetInt("resolutionIndex", resolutionIndex);
-        // 1) Grab the chosen Resolution
-        Resolution chosenRes = resolutions[resolutionIndex]; 
+        // Instead of accessing the resolutions array, create a new Resolution manually.
+        Resolution chosenRes = new Resolution();
+        chosenRes.width = 1920;
+        chosenRes.height = 1080;
         
-        // 2) Actually set the resolution
         Screen.SetResolution(chosenRes.width, chosenRes.height, true);
 
         if(brightnessController != null)
