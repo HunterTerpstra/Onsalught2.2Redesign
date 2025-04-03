@@ -7,7 +7,7 @@ Authors:
 - Ryan Chan
 - Delaney
 - Daniel
-- 
+  
 How to use:
 First, Clone this repository from GitHub.
 
